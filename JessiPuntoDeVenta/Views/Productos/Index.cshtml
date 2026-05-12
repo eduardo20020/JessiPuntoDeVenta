@@ -1,0 +1,56 @@
+@model IReadOnlyList<Producto>
+@{
+    ViewData["Title"] = "Productos";
+    var q = ViewBag.Q as string;
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <h1 class="h3 mb-0">Productos</h1>
+    <a class="btn btn-primary" asp-action="Create">Nuevo producto</a>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input name="q" value="@q" class="form-control" placeholder="Buscar nombre, código o id" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary">Buscar</button>
+    </div>
+</form>
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-success">@msg</div>
+}
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th class="text-end">P. venta</th>
+                <th class="text-end">P. costo</th>
+                <th class="text-end">Exist.</th>
+                <th>Activo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Nombre</td>
+                <td>@(p.CodigoBarras ?? "—")</td>
+                <td class="text-end">@p.PrecioVenta.ToString("N2")</td>
+                <td class="text-end">@(p.PrecioCosto?.ToString("N2") ?? "—")</td>
+                <td class="text-end">@p.Existencias</td>
+                <td>@(p.Activo ? "Sí" : "No")</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@p.Id">Editar</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

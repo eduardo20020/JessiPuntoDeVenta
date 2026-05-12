@@ -1,0 +1,34 @@
+@model ProveedorEditViewModel
+@{
+    ViewData["Title"] = "Editar proveedor";
+}
+
+<h1 class="h3 mb-3">Editar proveedor</h1>
+
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="col-lg-6">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Telefono" class="form-label"></label>
+        <input asp-for="Telefono" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Notas" class="form-label"></label>
+        <textarea asp-for="Notas" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="Activo" class="form-check-input" />
+        <label asp-for="Activo" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-link" asp-action="Index">Volver</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
